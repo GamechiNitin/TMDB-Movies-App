@@ -24,17 +24,7 @@ class _FavoritePageState extends State<FavoritePage> {
     _changeLoading(true);
     final db = LocalDatabase();
     favoriteList = await db.getFavorite();
-    calculateTotal();
     _changeLoading(false);
-  }
-
-  void calculateTotal() {
-    total = 0;
-    // if (productData.isNotEmpty) {
-    //   for (var element in productData) {
-    //     total = total + element.price!;
-    //   }
-    // }
   }
 
   _changeLoading(bool loading) {
@@ -72,7 +62,6 @@ class _FavoritePageState extends State<FavoritePage> {
                 style: TextStyle(
                   fontSize: size14,
                   color: kHintColor,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -119,18 +108,13 @@ class _FavoritePageState extends State<FavoritePage> {
         bool status = await db.addToFavorite(list);
         if (status) {
           favoriteList.remove(favoriteList[index]);
-          calculateTotal();
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Product remove from cart successfully.'),
-            ),
+            const SnackBar(content: Text(mRemovetoFavorite)),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Failed to remove from cart.'),
-            ),
+            const SnackBar(content: Text(mFailedtoRemoveFavorite)),
           );
         }
         _notify();

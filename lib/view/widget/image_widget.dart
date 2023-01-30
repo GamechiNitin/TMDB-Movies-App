@@ -13,10 +13,12 @@ class ImageWidget extends StatelessWidget {
         : CachedNetworkImage(
             imageUrl: ApiString.imageUrl + imageUrl!,
             progressIndicatorBuilder: (context, url, progress) {
-              return Text(
-                progress.downloaded.toString(),
-                style:
-                    const TextStyle(fontSize: size10, color: kDeepOrangeColor),
+              return const Center(
+                child: Text(
+                  "Loading...",
+                  style:
+                      TextStyle(fontSize: size10, color: kDeepOrangeColor,),
+                ),
               );
             },
             errorWidget: (context, url, error) {

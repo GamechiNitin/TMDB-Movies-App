@@ -348,7 +348,8 @@ class _HomePageState extends State<HomePage> {
                         if (favoriteListData
                             .any((e) => e.id == topRatedListData[index].id)) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text(mAlreadyAddtoCart)),
+                            const SnackBar(
+                                content: Text(mAlreadyAddtoFavorite)),
                           );
                         } else {
                           favoriteListData.add(topRatedListData[index]);
@@ -358,10 +359,10 @@ class _HomePageState extends State<HomePage> {
                               await db.addToFavorite(favoriteListData);
                           if (status) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text(mAddtoCart)));
+                                const SnackBar(content: Text(mAddtoFavorite)));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text(mFailedtoCart)),
+                              const SnackBar(content: Text(mFailedtoFavorite)),
                             );
                           }
                         }

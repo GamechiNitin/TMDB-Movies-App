@@ -71,17 +71,24 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          imageCard(widget.topRatedModel.posterPath ?? ""),
-          Expanded(
-            child: detailsCard(
-              name: widget.topRatedModel.title ?? "",
-              category: widget.topRatedModel.releaseDate ?? "",
-              desc: widget.topRatedModel.overview ?? "",
+      body: GestureDetector(
+        onTap: () {
+          if (widget.topRatedModel.id != null) {
+            Helper.launchInBrowser(widget.topRatedModel.id.toString());
+          }
+        },
+        child: Column(
+          children: [
+            imageCard(widget.topRatedModel.posterPath ?? ""),
+            Expanded(
+              child: detailsCard(
+                name: widget.topRatedModel.title ?? "",
+                category: widget.topRatedModel.releaseDate ?? "",
+                desc: widget.topRatedModel.overview ?? "",
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: FavoriteButtonWidget(
         isAddedToCart: isAddedToCart,
@@ -92,17 +99,21 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           }
         },
         onFavoriteTap: () async {
-          isAddedToCart = !isAddedToCart;
+          final db = LocalDatabase();
           if (isAddedToCart) {
             List<TopRatedModel> list = [];
             list.addAll(favoriteListData);
-            list.remove(widget.topRatedModel);
-            final db = LocalDatabase();
-            await db.addToFavorite(list);
+
+            if (list.any((element) => element.id == widget.topRatedModel.id)) {
+              list.removeWhere(
+                  (element) => element.id == widget.topRatedModel.id);
+              await db.addToFavorite(list);
+              isAddedToCart = false;
+            }
           } else {
             favoriteListData.add(widget.topRatedModel);
-            final db = LocalDatabase();
             await db.addToFavorite(favoriteListData);
+            isAddedToCart = true;
           }
           _notify();
         },

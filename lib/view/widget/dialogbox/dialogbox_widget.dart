@@ -28,7 +28,9 @@ class DialogBoxx {
             ),
             TextButton(
               child: const Text('Yes'),
-              onPressed: () async {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         );

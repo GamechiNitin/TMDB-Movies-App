@@ -168,7 +168,7 @@ class MovieWidget extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(300),
-                color: added ? kDeepOrangeColor : kBlackColor.withOpacity(0.1),
+                color: added ? kDeepOrangeColor : kBlackColor.withOpacity(0.5),
               ),
               child: const Icon(
                 Icons.favorite,
